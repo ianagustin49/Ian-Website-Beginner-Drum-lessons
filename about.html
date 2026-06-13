@@ -4,18 +4,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About | Ian's Beginner Drum Lessons</title>
+  <meta name="description" content="Meet Ian, the student drummer behind these free beginner drum lessons for all ages." />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
 </head>
 <body>
+  <div class="rainbow-strip"></div>
 
   <header class="site-header">
-    <nav class="nav container">
-      <a href="index.html" class="logo">🥁 Ian's Drum Lessons</a>
+    <nav class="nav">
+      <a href="index.html" class="logo"><span class="logo-emoji">🥁</span> Ian's Drum Lessons</a>
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="lessons.html">Lessons</a></li>
+        <li><a href="play.html" class="play-link">▶ Play Drums</a></li>
         <li><a href="about.html" class="active">About</a></li>
       </ul>
       <button class="hamburger" aria-label="Toggle menu" onclick="toggleMenu()">&#9776;</button>
@@ -23,40 +27,40 @@
   </header>
 
   <section class="page-hero">
-    <div class="container">
-      <h1>About Ian</h1>
-      <p>The person behind the lessons.</p>
-    </div>
+    <h1>Hi, I'm <span class="grad">Ian</span> 👋</h1>
+    <p>The student drummer behind these lessons.</p>
   </section>
 
-  <main class="about-page section container">
+  <main class="container section" style="padding-top:1rem;">
     <div class="about-grid">
-      <div class="about-avatar" aria-hidden="true">
-        <div class="avatar-placeholder">🥁</div>
-      </div>
+      <div class="avatar-big">🥁</div>
       <div class="about-text">
-        <h2>Hey, I'm Ian!</h2>
-        <p>I'm a student who loves playing drums and wants to help other beginners get started. I built this website to share everything I've learned on my own drumming journey — laid out clearly and for free.</p>
-        <p>I believe drumming is for everyone. You don't need expensive gear, years of lessons, or natural talent to start making music. You just need patience, a pair of sticks, and a willingness to practice.</p>
-        <p>These lessons are written the way I wish someone had explained things to me when I was first starting out — straightforward, practical, and focused on actually playing.</p>
-        <h3>My Goals for This Site</h3>
+        <h2>Why I made this site</h2>
+        <p>I'm a student who fell in love with playing drums, and I want to help other total beginners feel that same excitement. I built this website to share everything I've learned — laid out simply, made fun, and totally free.</p>
+        <p>I really believe drumming is for <strong>everyone</strong>, at any age. You don't need fancy gear, years of lessons, or natural talent. You just need a little patience, a pair of sticks (or even a pillow!), and the willingness to have fun while you practice.</p>
+        <p>These lessons are written the way I wish someone had explained things to me when I started — clear, friendly, and focused on actually <em>playing</em> as soon as possible.</p>
+
+        <h3>What this site is all about</h3>
         <ul>
-          <li>Make drumming accessible to total beginners</li>
-          <li>Keep every lesson free</li>
-          <li>Focus on fundamentals that last a lifetime</li>
-          <li>Grow as I grow as a drummer</li>
+          <li>🎉 Making drums fun and welcoming for all ages</li>
+          <li>🆓 Keeping every single lesson free</li>
+          <li>🥁 Letting you play a real kit right in your browser</li>
+          <li>📈 Helping you see your progress and stay motivated</li>
         </ul>
-        <div class="tip-box">
-          <strong>Questions or feedback?</strong> Reach out at <a href="mailto:ianagustin49@gmail.com">ianagustin49@gmail.com</a> — I'd love to hear from you!
+
+        <div class="tip-box" style="margin-top:1.5rem;">
+          <strong>Got questions or feedback?</strong> I'd love to hear from you — email me at <a href="mailto:ianagustin49@gmail.com">ianagustin49@gmail.com</a>.
+        </div>
+
+        <div style="margin-top:1.8rem;">
+          <a href="play.html" class="btn btn-primary">▶ Go Play the Drums</a>
         </div>
       </div>
     </div>
   </main>
 
   <footer class="site-footer">
-    <div class="container">
-      <p>Made with ❤️ by Ian &nbsp;|&nbsp; Beginner Drum Lessons &nbsp;|&nbsp; <a href="about.html">About Me</a></p>
-    </div>
+    <p><span class="foot-emoji">🥁</span> Made with love by Ian &nbsp;·&nbsp; Free Beginner Drum Lessons for Everyone &nbsp;·&nbsp; <a href="about.html">About Me</a></p>
   </footer>
 
   <script src="js/main.js"></script>
