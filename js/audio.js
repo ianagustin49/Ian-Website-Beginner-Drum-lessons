@@ -100,6 +100,12 @@ const DrumAudio = (() => {
     out.gain.exponentialRampToValueAtTime(0.0001, t + decay);
   }
   function hat(t, open)  { metal(t, 40, open ? 0.4 : 0.055, 0.32, 7000, 10000); }
+  function ride(t) { // shimmer + a tonal "ping"
+    metal(t, 50, 0.7, 0.18, 6000, 9000);
+    const o = ctx.createOscillator(); o.type = 'sine'; o.frequency.value = 820;
+    const g = ctx.createGain(); hit(g, t, 0.22, 0.5);
+    o.connect(g).connect(master); o.start(t); o.stop(t + 0.55);
+  }
   function crash(t)      { // metal shimmer + airy noise wash
     metal(t, 38, 1.5, 0.3, 5000, 8000);
     const n = noiseSrc();
@@ -149,6 +155,7 @@ const DrumAudio = (() => {
       case 'tom2':    tom(t, 180); break;
       case 'floor':   tom(t, 120); break;
       case 'crash':   crash(t); break;
+      case 'ride':    ride(t); break;
       case 'click':   click(t, false); break;
       case 'click1':  click(t, true); break;
     }
