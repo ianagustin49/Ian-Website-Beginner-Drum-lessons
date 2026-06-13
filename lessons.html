@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lessons | Ian's Beginner Drum Lessons</title>
+  <meta name="description" content="A full beginner drum course in 4 levels. Read the lessons, watch videos, play along, and check off your progress as you go." />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="rainbow-strip"></div>
+  <div class="scroll-track" aria-hidden="true">
+    <div class="scroll-stick"><span class="shaft"></span><span class="tip"></span></div>
+  </div>
+
+  <header class="site-header">
+    <nav class="nav">
+      <a href="index.html" class="logo"><span class="logo-emoji">🥁</span> Ian's Drum Lessons</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="lessons.html" class="active">Lessons</a></li>
+        <li><a href="play.html" class="play-link">▶ Play Drums</a></li>
+        <li><a href="dashboard.html">My Progress</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+      <button class="hamburger" aria-label="Toggle menu" onclick="toggleMenu()">&#9776;</button>
+    </nav>
+  </header>
+
+  <section class="page-hero">
+    <h1>Your <span class="grad">Drum Course</span></h1>
+    <p>Four levels, from your first tap to playing along with songs. Tap a lesson to open it, and check the circle when you're done!</p>
+  </section>
+
+  <main class="container" style="padding-bottom:4rem;">
+
+    <!-- PROGRESS -->
+    <div class="progress-banner">
+      <span class="ptext">Your progress</span>
+      <div class="progress-bar-outer"><div class="progress-bar-inner"></div></div>
+      <button class="reset-progress">Reset</button>
+    </div>
+
+    <!-- ============ LEVEL 1 ============ -->
+    <section class="level-group">
+      <div class="level-heading" style="--c: var(--green)">
+        <span class="lv-badge">Level 1 · Starter 🌱</span>
+        <h2>Get Comfortable</h2>
+      </div>
+
+      <!-- Lesson 1 -->
+      <article class="lesson-article" id="lesson-1" style="--c: var(--green)">
+        <div class="lesson-top">
+          <div class="lesson-check" data-lesson="1" role="checkbox" aria-label="Mark lesson complete"></div>
+          <h3>1. Meet the Drum Kit</h3>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="lesson-body">
+          <p>Before you play a note, let's get to know your new best friend — the drum kit! Here are the main pieces:</p>
+          <ul>
+            <li><strong>Bass Drum (Kick)</strong> — the big drum on the floor, played with your foot.</li>
+            <li><strong>Snare Drum</strong> — the sharp, snappy drum right in front of you.</li>
+            <li><strong>Hi-Hat</strong> — two cymbals that open and close with a foot pedal.</li>
+            <li><strong>Toms</strong> — the round drums used for fills and rolls.</li>
+            <li><strong>Crash &amp; Ride Cymbals</strong> — the shiny metal discs for splashes and steady patterns.</li>
+          </ul>
+          <div class="tip-box"><strong>Try it now:</strong> Head to the <a href="play.html">Play Room</a> and tap each drum to hear how it sounds!</div>
+          <h4>📺 Watch: Parts of the Drum Kit</h4>
+          <div class="video-frame">
+            <div class="video-placeholder">
+              <span class="vp-icon">🎬</span>
+              <span>Video lesson coming soon — Ian will add it here!</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Lesson 2 -->
+      <article class="lesson-article" id="lesson-2" style="--c: var(--green)">
+        <div class="lesson-top">
+          <div class="lesson-check" data-lesson="2" role="checkbox" aria-label="Mark lesson complete"></div>
+          <h3>2. How to Hold the Sticks</h3>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="lesson-body">
+          <p>A good grip keeps you relaxed and in control. For beginners we use <strong>matched grip</strong> — both hands hold the stick the same way.</p>
+          <ol>
+            <li>Hold the stick about ⅓ of the way up from the bottom end.</li>
+            <li>Pinch it gently between your thumb and pointer finger — this is the "fulcrum."</li>
+            <li>Let your other fingers wrap loosely around. Don't squeeze!</li>
+            <li>When you hit the drum, let the stick <strong>bounce back up</strong> on its own.</li>
+          </ol>
+          <div class="tip-box"><strong>Beginner Tip:</strong> Hold the sticks like you'd hold a small bird — firm enough that it won't fly away, gentle enough that you won't hurt it.</div>
+        </div>
+      </article>
+    </section>
+
+    <!-- ============ LEVEL 2 ============ -->
+    <section class="level-group">
+      <div class="level-heading" style="--c: var(--teal)">
+        <span class="lv-badge">Level 2 · Beat Builder 🥁</span>
+        <h2>Play Your First Beats</h2>
+      </div>
+
+      <!-- Lesson 3 -->
+      <article class="lesson-article" id="lesson-3" style="--c: var(--teal)">
+        <div class="lesson-top">
+          <div class="lesson-check" data-lesson="3" role="checkbox" aria-label="Mark lesson complete"></div>
+          <h3>3. Counting &amp; Reading Beats</h3>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="lesson-body">
+          <p>Most beginner drum music is in <strong>4/4 time</strong> — that means 4 beats in each bar. We count it out loud:</p>
+          <p style="font-size:1.3rem; text-align:center; font-weight:800; color:var(--teal);">1 &amp; 2 &amp; 3 &amp; 4 &amp;</p>
+          <p>Each <strong>number</strong> is a main beat. Each <strong>"and"</strong> is the halfway point in between. Tap your foot on the numbers and you've got it!</p>
+          <div class="tip-box"><strong>Try it:</strong> Count out loud and clap on every number. Then clap on the "ands" too. That's the rhythm of eighth notes!</div>
+        </div>
+      </article>
+
+      <!-- Lesson 4 -->
+      <article class="lesson-article" id="lesson-4" style="--c: var(--teal)">
+        <div class="lesson-top">
+          <div class="lesson-check" data-lesson="4" role="checkbox" aria-label="Mark lesson complete"></div>
+          <h3>4. Your First Beat — The Rock Groove</h3>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="lesson-body">
+          <p>This is the most famous beat in the world. Learn this and you can play along with thousands of songs!</p>
+          <div class="beat-grid">
+            <div class="beat-row">
+              <span class="part-label">Hi-Hat</span>
+              <div class="beat-cells">
+                <div class="beat-cell on-hat">1</div><div class="beat-cell on-hat">&amp;</div>
+                <div class="beat-cell on-hat">2</div><div class="beat-cell on-hat">&amp;</div>
+                <div class="beat-cell on-hat">3</div><div class="beat-cell on-hat">&amp;</div>
+                <div class="beat-cell on-hat">4</div><div class="beat-cell on-hat">&amp;</div>
+              </div>
+            </div>
+            <div class="beat-row">
+              <span class="part-label">Snare</span>
+              <div class="beat-cells">
+                <div class="beat-cell">1</div><div class="beat-cell">&amp;</div>
+                <div class="beat-cell on-snare">2</div><div class="beat-cell">&amp;</div>
+                <div class="beat-cell">3</div><div class="beat-cell">&amp;</div>
+                <div class="beat-cell on-snare">4</div><div class="beat-cell">&amp;</div>
+              </div>
+            </div>
+            <div class="beat-row">
+              <span class="part-label">Kick</span>
+              <div class="beat-cells">
+                <div class="beat-cell on-bass">1</div><div class="beat-cell">&amp;</div>
+                <div class="beat-cell">2</div><div class="beat-cell">&amp;</div>
+                <div class="beat-cell on-bass">3</div><div class="beat-cell">&amp;</div>
+                <div class="beat-cell">4</div><div class="beat-cell">&amp;</div>
+              </div>
+            </div>
+          </div>
+          <h4>How to learn it, one piece at a time:</h4>
+          <ol>
+            <li>Play the hi-hat on every count: 1 &amp; 2 &amp; 3 &amp; 4 &amp;.</li>
+            <li>Add the snare on beats <strong>2</strong> and <strong>4</strong>.</li>
+            <li>Add the kick on beats <strong>1</strong> and <strong>3</strong>.</li>
+            <li>Put it together — slowly!</li>
+          </ol>
+          <h4>🔊 Hear it &amp; play along:</h4>
+          <div class="beat-buttons">
+            <button class="beat-btn" data-beat="rock" style="--c: var(--red)">▶ Play the Rock Beat</button>
+          </div>
+          <div class="tip-box"><strong>Beginner Tip:</strong> Practice each limb separately first. Your brain needs a little time to learn each hand and foot — that's totally normal!</div>
+        </div>
+      </article>
+    </section>
+
+    <!-- ============ LEVEL 3 ============ -->
+    <section class="level-group">
+      <div class="level-heading" style="--c: var(--blue)">
+        <span class="lv-badge">Level 3 · Technique 💪</span>
+        <h2>Build Real Skills</h2>
+      </div>
+
+      <!-- Lesson 5 -->
+      <article class="lesson-article" id="lesson-5" style="--c: var(--blue)">
+        <div class="lesson-top">
+          <div class="lesson-check" data-lesson="5" role="checkbox" aria-label="Mark lesson complete"></div>
+          <h3>5. The Building Blocks (Rudiments)</h3>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="lesson-body">
+          <p>Rudiments are little stick patterns — like the ABCs of drumming. Master these three and you can play almost anything:</p>
+          <h4>1. Single Stroke Roll</h4>
+          <p>Alternate hands: <code>R L R L R L R L</code></p>
+          <h4>2. Double Stroke Roll</h4>
+          <p>Two hits per hand: <code>R R L L R R L L</code></p>
+          <h4>3. Paradiddle</h4>
+          <p>The fun one: <code>R L R R&nbsp;&nbsp;L R L L</code></p>
+          <div class="tip-box"><strong>Practice Plan:</strong> 5 minutes on each, every day, on a pillow or practice pad. You'll feel the difference within two weeks!</div>
+        </div>
+      </article>
+
+      <!-- Lesson 6 -->
+      <article class="lesson-article" id="lesson-6" style="--c: var(--blue)">
+        <div class="lesson-top">
+          <div class="lesson-check" data-lesson="6" role="checkbox" aria-label="Mark lesson complete"></div>
+          <h3>6. Locking In With the Metronome</h3>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="lesson-body">
+          <p>A metronome is a tool that clicks at a steady speed. It's the secret to becoming a tight, reliable drummer.</p>
+          <ul>
+            <li>Set it to a speed where you can play <em>perfectly</em>. Mistakes? Slow it down.</li>
+            <li>Play cleanly 10 times in a row, then speed up by 5 BPM.</li>
+            <li>Repeat. This is how real speed is built.</li>
+          </ul>
+          <div class="tip-box"><strong>Use ours free:</strong> There's a built-in metronome in the <a href="play.html">Play Room</a> — start at 60 BPM and work your way up.</div>
+        </div>
+      </article>
+    </section>
+
+    <!-- ============ LEVEL 4 ============ -->
+    <section class="level-group">
+      <div class="level-heading" style="--c: var(--purple)">
+        <span class="lv-badge">Level 4 · Play Songs 🚀</span>
+        <h2>Make Music</h2>
+      </div>
+
+      <!-- Lesson 7 -->
+      <article class="lesson-article" id="lesson-7" style="--c: var(--purple)">
+        <div class="lesson-top">
+          <div class="lesson-check" data-lesson="7" role="checkbox" aria-label="Mark lesson complete"></div>
+          <h3>7. Adding Drum Fills</h3>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="lesson-body">
+          <p>A <strong>fill</strong> is a little burst of drumming that connects two sections of a song — usually at the end of every 4 or 8 bars.</p>
+          <p>The simplest fill: play your rock groove for 3 bars, then on bar 4 play four snare hits, or roll down the toms — <code>snare · tom1 · tom2 · floor</code> — and crash on beat 1 of the next bar!</p>
+          <div class="tip-box"><strong>Try it:</strong> Loop a beat in the <a href="play.html">Play Room</a> and add a tom roll at the end of each cycle.</div>
+        </div>
+      </article>
+
+      <!-- Lesson 8 -->
+      <article class="lesson-article" id="lesson-8" style="--c: var(--purple)">
+        <div class="lesson-top">
+          <div class="lesson-check" data-lesson="8" role="checkbox" aria-label="Mark lesson complete"></div>
+          <h3>8. Play Along to Real Songs</h3>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="lesson-body">
+          <p>This is the goal — making music with songs you love! Here's how to start:</p>
+          <ol>
+            <li>Pick a song with a simple, steady beat (slower is easier).</li>
+            <li>Listen first and tap the rhythm on your legs.</li>
+            <li>Play just the kick and snare along with it.</li>
+            <li>Add the hi-hat once you're comfortable.</li>
+          </ol>
+          <h4>🔊 Warm up with these grooves:</h4>
+          <div class="beat-buttons">
+            <button class="beat-btn" data-beat="rock"      style="--c: var(--red)">▶ Rock</button>
+            <button class="beat-btn" data-beat="pop"       style="--c: var(--purple)">▶ Pop</button>
+            <button class="beat-btn" data-beat="fourfloor" style="--c: var(--teal)">▶ Dance</button>
+          </div>
+          <div class="tip-box"><strong>You did it! 🎉</strong> Once you can play along to a song, you're officially a drummer. Keep practicing and have fun!</div>
+        </div>
+      </article>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p><span class="foot-emoji">🥁</span> Made with love by Ian &nbsp;·&nbsp; Free Beginner Drum Lessons for Everyone &nbsp;·&nbsp; <a href="about.html">About Me</a></p>
+  </footer>
+
+  <script src="js/audio.js"></script>
+  <script src="js/beats.js"></script>
+  <script src="js/progress.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

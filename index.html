@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ian's Beginner Drum Lessons — Learn Drums the Fun Way</title>
+  <meta name="description" content="Free, fun beginner drum lessons for all ages. Play a real drum kit in your browser, learn step by step, and track your progress." />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="rainbow-strip"></div>
+  <div class="scroll-track" aria-hidden="true">
+    <div class="scroll-stick"><span class="shaft"></span><span class="tip"></span></div>
+  </div>
+
+  <header class="site-header">
+    <nav class="nav">
+      <a href="index.html" class="logo"><span class="logo-emoji">🥁</span> Ian's Drum Lessons</a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="lessons.html">Lessons</a></li>
+        <li><a href="play.html" class="play-link">▶ Play Drums</a></li>
+        <li><a href="dashboard.html">My Progress</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+      <button class="hamburger" aria-label="Toggle menu" onclick="toggleMenu()">&#9776;</button>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Learn Drums<br />the <span class="grad">Right Way</span></h1>
+      <p>Never touched a drum before? Start here. Play a real drum kit right in your browser, follow a clear step-by-step course, and track your progress — all for free, at any age.</p>
+      <div class="hero-btns">
+        <a href="play.html" class="btn btn-primary">Try the Drum Kit</a>
+        <a href="lessons.html" class="btn btn-sun">Start Lesson 1</a>
+      </div>
+      <p class="hero-note">Tap a drum below to hear it — no experience needed.</p>
+    </div>
+    <div class="kit-stage">
+      <div data-drumkit></div>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Why You'll Love Drumming</h2>
+      <p class="section-sub">It's good for your brain, your mood, and it's just plain fun.</p>
+      <div class="cards">
+        <div class="card" style="--c: var(--red)">
+          <div class="card-icon">🎵</div>
+          <h3>Feel the Rhythm</h3>
+          <p>Drumming builds your natural sense of timing — the heartbeat of all music.</p>
+        </div>
+        <div class="card" style="--c: var(--blue)">
+          <div class="card-icon">🧠</div>
+          <h3>Brain Booster</h3>
+          <p>Using all four limbs together grows your coordination and focus.</p>
+        </div>
+        <div class="card" style="--c: var(--green)">
+          <div class="card-icon">😄</div>
+          <h3>Instant Fun</h3>
+          <p>Hitting drums feels amazing. It's the happiest way to let off steam.</p>
+        </div>
+        <div class="card" style="--c: var(--purple)">
+          <div class="card-icon">🤝</div>
+          <h3>Join the Band</h3>
+          <p>Every band needs a drummer. Learn this and you'll always be wanted.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEARNING JOURNEY ROADMAP -->
+  <section class="section bg-soft">
+    <div class="container">
+      <h2 class="section-title">Your Learning Journey</h2>
+      <p class="section-sub">A clear path from your very first tap to playing full songs.</p>
+      <div class="roadmap">
+        <div class="road-step" style="--c: var(--green)">
+          <div class="road-dot">🌱</div>
+          <div class="road-body">
+            <span class="level-tag">Level 1 · Starter</span>
+            <h3>Get Comfortable</h3>
+            <p>Meet the drum kit, learn to hold the sticks, and make your very first sounds.</p>
+          </div>
+        </div>
+        <div class="road-step" style="--c: var(--teal)">
+          <div class="road-dot">🥁</div>
+          <div class="road-body">
+            <span class="level-tag">Level 2 · Beat Builder</span>
+            <h3>Play Your First Beats</h3>
+            <p>Read simple notation and play the classic rock groove that powers thousands of songs.</p>
+          </div>
+        </div>
+        <div class="road-step" style="--c: var(--blue)">
+          <div class="road-dot">💪</div>
+          <div class="road-body">
+            <span class="level-tag">Level 3 · Technique</span>
+            <h3>Build Real Skills</h3>
+            <p>Master core rudiments and lock in your timing with the metronome.</p>
+          </div>
+        </div>
+        <div class="road-step" style="--c: var(--purple)">
+          <div class="road-dot">🚀</div>
+          <div class="road-body">
+            <span class="level-tag">Level 4 · Play Songs</span>
+            <h3>Make Music</h3>
+            <p>Add fills, change up grooves, and play along to real songs you love.</p>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:center; margin-top:2.5rem;">
+        <a href="lessons.html" class="btn btn-primary">See All Lessons</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <p><span class="foot-emoji">🥁</span> Made with love by Ian &nbsp;·&nbsp; Free Beginner Drum Lessons for Everyone &nbsp;·&nbsp; <a href="about.html">About Me</a></p>
+  </footer>
+
+  <script src="js/audio.js"></script>
+  <script src="js/drumkit.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
