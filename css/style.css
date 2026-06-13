@@ -171,29 +171,33 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.18; font-weight: 
 }
 .kit-wrap { position: relative; width: 100%; max-width: 540px; z-index: 1; }
 
-/* The whole kit is one SVG illustration */
+/* The whole kit is one SVG line-art illustration */
 .kit-svg { width: 100%; height: auto; display: block; overflow: visible; }
 
-/* Interactive pieces */
-.kit-svg .pad { cursor: pointer; -webkit-tap-highlight-color: transparent; }
-.kit-svg .pad { transform-box: fill-box; transform-origin: center; }
-.kit-svg .pad { transition: filter 0.08s ease; }
-.kit-svg .pad:hover { filter: brightness(1.08); }
-.kit-svg .pad:focus { outline: none; }
-.kit-svg .pad:focus-visible ellipse:nth-of-type(2),
-.kit-svg .pad:focus-visible > circle:nth-of-type(2) { stroke: var(--khaki); stroke-width: 3; }
+/* line work */
+.kit-svg .ln { fill: none; stroke: #e7ddcd; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.kit-svg .ln.thin { stroke-width: 1.2; stroke: #c7bca8; }
+.kit-svg .hardware { pointer-events: none; }
 
-.kit-svg .pad.hit { animation: padhit 0.16s ease; }
-@keyframes padhit { 0% { filter: brightness(1.45); } 100% { filter: brightness(1); } }
+/* invisible click target over each piece */
+.kit-svg .hit-area { fill: rgba(0,0,0,0); cursor: pointer; }
+/* flash that lights up the head when struck */
+.kit-svg .flash { fill: var(--khaki); opacity: 0; pointer-events: none; }
+
+.kit-svg .pad { -webkit-tap-highlight-color: transparent; }
+.kit-svg .pad:hover .ln { stroke: #ffffff; }
+.kit-svg .pad:focus { outline: none; }
+.kit-svg .pad:focus-visible .hit-area { fill: rgba(212,196,172,0.12); }
+.kit-svg .pad.hit .flash { animation: flash 0.28s ease; }
+@keyframes flash { 0% { opacity: 0.5; } 100% { opacity: 0; } }
 
 /* labels drawn inside the SVG */
-.kit-svg .label { font-family: var(--font-head); font-weight: 600; font-size: 12px; pointer-events: none; }
-.kit-svg .label.cym { fill: #f0dca8; }
-.kit-svg .key { font-family: var(--font-head); font-weight: 600; font-size: 9px; fill: rgba(40,26,5,0.55); pointer-events: none; letter-spacing: 0.5px; }
-.kit-svg .key.cym { fill: #d9c089; }
+.kit-svg .label { font-family: var(--font-head); font-weight: 600; font-size: 11px; fill: var(--text-soft); pointer-events: none; }
+.kit-svg .key { font-family: var(--font-head); font-weight: 700; font-size: 9px; fill: var(--brown); pointer-events: none; letter-spacing: 0.5px; }
 
 /* drumsticks — pivot at the tip (local 0,0 = 50% 0% of bbox) */
 .kit-svg .stick { transition: transform 0.1s ease; pointer-events: none; transform-box: fill-box; transform-origin: 50% 0%; }
+.kit-svg .stick .ln { stroke: #d9c7a3; }
 
 .kit-hint { text-align: center; margin-top: 1.2rem; color: var(--text-soft); font-size: 0.95rem; }
 .kit-hint strong { color: var(--khaki); }

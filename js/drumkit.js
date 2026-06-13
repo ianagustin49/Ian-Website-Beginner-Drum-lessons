@@ -1,155 +1,147 @@
 /* =========================================================
-   drumkit.js — Renders a realistic drum SET as an SVG
-   illustration (drums in perspective, cymbals on stands)
-   that you can play with click, tap, or keyboard. Animated
-   sticks tap the drum you hit. Renders into [data-drumkit].
+   drumkit.js — Renders the drum SET as a clean line-art
+   illustration (technical-sketch style) matching the
+   reference layout: two rack toms over a front-facing bass
+   drum, snare left, floor tom right, cymbals on stands, and
+   a hi-hat with pedal. Playable by click, tap, or keyboard.
    ========================================================= */
 
 (function () {
-  const VB_W = 600, VB_H = 470;
+  const VB_W = 600, VB_H = 480;
 
-  // Each interactive piece: id (=sound), label, key, and the
-  // centre of its playing surface (for the stick animation).
-  const PIECES = {
-    crash: { label: 'Crash',  key: 'q', cx: 142, cy: 92  },
-    hat:   { label: 'Hi-Hat', key: 'a', cx: 78,  cy: 250 },
-    tom1:  { label: 'Tom 1',  key: 'w', cx: 246, cy: 198 },
-    tom2:  { label: 'Tom 2',  key: 'e', cx: 356, cy: 192 },
-    ride:  { label: 'Ride',   key: 'r', cx: 470, cy: 118 },
-    snare: { label: 'Snare',  key: 's', cx: 150, cy: 300 },
-    floor: { label: 'Floor',  key: 'd', cx: 496, cy: 268 },
-    kick:  { label: 'Kick',   key: ' ', cx: 300, cy: 338 },
+  // Interactive pieces — id (=sound), label, key, and the
+  // centre of the playing surface (used for the sticks).
+  const P = {
+    crash: { label: 'Crash',  key: 'q', cx: 168, cy: 116 },
+    ride:  { label: 'Ride',   key: 'r', cx: 432, cy: 124 },
+    hat:   { label: 'Hi-Hat', key: 'a', cx: 92,  cy: 250 },
+    tom1:  { label: 'Tom 1',  key: 'w', cx: 250, cy: 196 },
+    tom2:  { label: 'Tom 2',  key: 'e', cx: 348, cy: 190 },
+    snare: { label: 'Snare',  key: 's', cx: 196, cy: 300 },
+    floor: { label: 'Floor',  key: 'd', cx: 452, cy: 300 },
+    kick:  { label: 'Kick',   key: ' ', cx: 300, cy: 366 },
   };
   const KEY_LABEL = { ' ': 'space' };
+  let _id;
 
-  /* ---------- SVG piece builders ---------- */
+  /* ---- small drawing helpers (line-art) ---- */
   function lugs(cx, cy, rx, ry, n) {
     let s = '';
     for (let i = 0; i < n; i++) {
       const a = (Math.PI * 2 * i) / n;
-      const x = cx + Math.cos(a) * rx, y = cy + Math.sin(a) * ry;
-      s += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3.4" fill="url(#chrome)"/>`;
+      const c = Math.cos(a), si = Math.sin(a);
+      s += `<line class="ln thin" x1="${(cx + c * rx).toFixed(1)}" y1="${(cy + si * ry).toFixed(1)}"
+              x2="${(cx + c * rx * 1.14).toFixed(1)}" y2="${(cy + si * ry * 1.14).toFixed(1)}"/>`;
     }
     return s;
   }
+  const txt = (p) => `
+    <text class="label" x="${p.cx}" y="${p.cy + 4}" text-anchor="middle">${p.label}</text>
+    <text class="key" x="${p.cx}" y="${p.cy + 16}" text-anchor="middle">${(KEY_LABEL[p.key] || p.key).toUpperCase()}</text>`;
 
-  // A cylindrical drum seen at a slight angle (head ellipse + shell body).
-  function drum(p, rx, ry, depth, shellId, labelDark) {
-    const { cx, cy, label, key } = p;
-    const body = `M ${cx - rx} ${cy}
-                  L ${cx - rx} ${cy + depth}
-                  A ${rx} ${ry} 0 0 0 ${cx + rx} ${cy + depth}
-                  L ${cx + rx} ${cy} Z`;
+  // A cylindrical drum, perspective (head ellipse + shell).
+  function drum(p, rx, ry, depth, lugN) {
+    const { cx, cy } = p;
+    const shell = `M ${cx - rx} ${cy} L ${cx - rx} ${cy + depth}
+                   A ${rx} ${ry} 0 0 0 ${cx + rx} ${cy + depth}
+                   L ${cx + rx} ${cy}`;
     return `
-      <g class="pad" data-id="${idOf(p)}" tabindex="0" role="button" aria-label="${label}">
-        <path d="${body}" fill="url(#${shellId})" stroke="#000" stroke-opacity="0.25"/>
-        <ellipse cx="${cx}" cy="${cy + depth}" rx="${rx}" ry="${ry}" fill="#000" opacity="0.18"/>
-        <ellipse cx="${cx}" cy="${cy}" rx="${rx + 4}" ry="${ry + 4}" fill="url(#chrome)"/>
-        <ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="url(#head)"/>
-        ${lugs(cx, cy, rx + 4, ry + 4, 8)}
-        <text class="label" x="${cx}" y="${cy + 2}" text-anchor="middle" fill="${labelDark}">${label}</text>
-        <text class="key" x="${cx}" y="${cy + 15}" text-anchor="middle">${(KEY_LABEL[key] || key).toUpperCase()}</text>
+      <g class="pad" data-id="${_id}" tabindex="0" role="button" aria-label="${p.label}">
+        <path class="ln" d="${shell}"/>
+        <ellipse class="ln thin" cx="${cx}" cy="${cy + depth}" rx="${rx}" ry="${ry}"/>
+        <ellipse class="flash" cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}"/>
+        <ellipse class="ln" cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}"/>
+        <ellipse class="ln thin" cx="${cx}" cy="${cy}" rx="${rx * 0.82}" ry="${ry * 0.82}"/>
+        ${lugs(cx, cy, rx, ry, lugN || 8)}
+        <ellipse class="hit-area" cx="${cx}" cy="${cy + depth / 2}" rx="${rx + 4}" ry="${ry + depth / 2}"/>
+        ${txt(p)}
       </g>`;
   }
 
-  function bass(p, r, shellId) {
-    const { cx, cy, label, key } = p;
+  // Big front-facing bass drum.
+  function bass(p, r) {
+    const { cx, cy } = p;
     return `
-      <g class="pad" data-id="${idOf(p)}" tabindex="0" role="button" aria-label="${label}">
-        <circle cx="${cx}" cy="${cy + 6}" r="${r}" fill="#000" opacity="0.2"/>
-        <circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#${shellId})"/>
-        <circle cx="${cx}" cy="${cy}" r="${r - 8}" fill="url(#chrome)"/>
-        <circle cx="${cx}" cy="${cy}" r="${r - 16}" fill="url(#bassHead)"/>
-        ${lugs(cx, cy, r - 4, r - 4, 12)}
-        <rect x="${cx - 70}" y="${cy + r - 18}" width="22" height="40" rx="5" fill="url(#chrome)"/>
-        <rect x="${cx + 48}" y="${cy + r - 18}" width="22" height="40" rx="5" fill="url(#chrome)"/>
-        <text class="label" x="${cx}" y="${cy + 2}" text-anchor="middle" fill="#5b3620">${label}</text>
-        <text class="key" x="${cx}" y="${cy + 18}" text-anchor="middle" font-size="11">${(KEY_LABEL[key] || key).toUpperCase()}</text>
+      <g class="pad" data-id="${_id}" tabindex="0" role="button" aria-label="${p.label}">
+        <circle class="flash" cx="${cx}" cy="${cy}" r="${r - 14}"/>
+        <circle class="ln" cx="${cx}" cy="${cy}" r="${r}"/>
+        <circle class="ln thin" cx="${cx}" cy="${cy}" r="${r - 9}"/>
+        <circle class="ln thin" cx="${cx}" cy="${cy}" r="${r - 15}"/>
+        ${lugs(cx, cy, r - 4, r - 4, 14)}
+        <circle class="hit-area" cx="${cx}" cy="${cy}" r="${r}"/>
+        ${txt(p)}
       </g>`;
   }
 
-  function cymbal(p, rx, ry, standBottom, tilt) {
-    const { cx, cy, label, key } = p;
+  // Cymbal disc (stand drawn separately in hardware layer).
+  function cymbal(p, rx, ry, tilt) {
+    const { cx, cy } = p;
     return `
-      <g aria-hidden="true"><line x1="${cx}" y1="${cy}" x2="${cx}" y2="${standBottom}" stroke="url(#chrome)" stroke-width="4"/>
-        <line x1="${cx}" y1="${standBottom}" x2="${cx - 34}" y2="${standBottom + 18}" stroke="#7c828a" stroke-width="3"/>
-        <line x1="${cx}" y1="${standBottom}" x2="${cx + 34}" y2="${standBottom + 18}" stroke="#7c828a" stroke-width="3"/></g>
-      <g class="pad" data-id="${idOf(p)}" tabindex="0" role="button" aria-label="${label}" transform="rotate(${tilt || 0} ${cx} ${cy})">
-        <ellipse cx="${cx}" cy="${cy + 5}" rx="${rx}" ry="${ry}" fill="#000" opacity="0.18"/>
-        <ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="url(#cymbal)" stroke="#7a5a1e" stroke-width="1"/>
-        <ellipse cx="${cx}" cy="${cy}" rx="${rx * 0.66}" ry="${ry * 0.66}" fill="none" stroke="rgba(120,80,20,0.35)"/>
-        <ellipse cx="${cx}" cy="${cy}" rx="${rx * 0.33}" ry="${ry * 0.33}" fill="none" stroke="rgba(120,80,20,0.35)"/>
-        <ellipse cx="${cx}" cy="${cy}" rx="${rx * 0.16}" ry="${ry * 0.55}" fill="url(#bell)"/>
-        <text class="key cym" x="${cx}" y="${cy - ry - 6}" text-anchor="middle">${(KEY_LABEL[key] || key).toUpperCase()}</text>
-        <text class="label cym" x="${cx}" y="${cy + ry + 14}" text-anchor="middle">${label}</text>
+      <g class="pad" data-id="${_id}" tabindex="0" role="button" aria-label="${p.label}"
+         transform="rotate(${tilt || 0} ${cx} ${cy})">
+        <ellipse class="flash" cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}"/>
+        <ellipse class="ln" cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}"/>
+        <ellipse class="ln thin" cx="${cx}" cy="${cy}" rx="${rx * 0.6}" ry="${ry * 0.6}"/>
+        <ellipse class="ln thin" cx="${cx}" cy="${cy}" rx="${rx * 0.16}" ry="${ry * 0.5}"/>
+        <ellipse class="hit-area" cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}"/>
+        <text class="label" x="${cx}" y="${cy + ry + 15}" text-anchor="middle">${p.label}</text>
+        <text class="key" x="${cx}" y="${cy - ry - 6}" text-anchor="middle">${(KEY_LABEL[p.key] || p.key).toUpperCase()}</text>
       </g>`;
   }
 
-  // map a piece object back to its id
-  let _pieceId;
-  function idOf() { return _pieceId; }
+  // Hardware: stands, legs, pedals (non-interactive line-art).
+  function hardware() {
+    return `
+    <g class="hardware">
+      <!-- crash stand -->
+      <line class="ln thin" x1="${P.crash.cx}" y1="${P.crash.cy}" x2="178" y2="430"/>
+      <line class="ln thin" x1="178" y1="430" x2="150" y2="458"/>
+      <line class="ln thin" x1="178" y1="430" x2="206" y2="458"/>
+      <line class="ln thin" x1="178" y1="430" x2="178" y2="460"/>
+      <!-- ride stand -->
+      <line class="ln thin" x1="${P.ride.cx}" y1="${P.ride.cy}" x2="452" y2="430"/>
+      <line class="ln thin" x1="452" y1="430" x2="426" y2="458"/>
+      <line class="ln thin" x1="452" y1="430" x2="480" y2="458"/>
+      <line class="ln thin" x1="452" y1="430" x2="452" y2="460"/>
+      <!-- hi-hat: rod, lower cymbal, legs, pedal -->
+      <line class="ln thin" x1="${P.hat.cx}" y1="${P.hat.cy}" x2="${P.hat.cx}" y2="448"/>
+      <ellipse class="ln thin" cx="${P.hat.cx}" cy="${P.hat.cy + 9}" rx="50" ry="11"/>
+      <line class="ln thin" x1="${P.hat.cx}" y1="448" x2="66" y2="466"/>
+      <line class="ln thin" x1="${P.hat.cx}" y1="448" x2="118" y2="466"/>
+      <line class="ln thin" x1="62" y1="466" x2="96" y2="466"/>
+      <rect class="ln thin" x="60" y="452" width="34" height="9" rx="3"/>
+      <!-- snare stand -->
+      <line class="ln thin" x1="${P.snare.cx - 16}" y1="${P.snare.cy + 24}" x2="172" y2="452"/>
+      <line class="ln thin" x1="${P.snare.cx + 16}" y1="${P.snare.cy + 24}" x2="226" y2="452"/>
+      <line class="ln thin" x1="${P.snare.cx}" y1="${P.snare.cy + 20}" x2="200" y2="452"/>
+      <line class="ln thin" x1="170" y1="452" x2="230" y2="452"/>
+      <!-- floor tom legs -->
+      <line class="ln thin" x1="${P.floor.cx - 52}" y1="${P.floor.cy + 30}" x2="${P.floor.cx - 60}" y2="455"/>
+      <line class="ln thin" x1="${P.floor.cx + 52}" y1="${P.floor.cy + 30}" x2="${P.floor.cx + 60}" y2="455"/>
+      <!-- bass spurs + pedal -->
+      <line class="ln thin" x1="${P.kick.cx - 70}" y1="${P.kick.cy + 60}" x2="${P.kick.cx - 96}" y2="450"/>
+      <line class="ln thin" x1="${P.kick.cx + 70}" y1="${P.kick.cy + 60}" x2="${P.kick.cx + 96}" y2="450"/>
+      <rect class="ln thin" x="${P.kick.cx - 16}" y="446" width="32" height="12" rx="3"/>
+      <line class="ln thin" x1="${P.kick.cx}" y1="${P.kick.cy + 86}" x2="${P.kick.cx}" y2="448"/>
+    </g>`;
+  }
 
   function buildSVG() {
-    // build pieces with their id captured
-    const draw = (id, fn) => { _pieceId = id; return fn(PIECES[id]); };
-
+    const D = (id, fn) => { _id = id; return fn(P[id]); };
     return `
 <svg class="kit-svg" viewBox="0 0 ${VB_W} ${VB_H}" role="group" aria-label="Playable drum set" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <radialGradient id="head" cx="42%" cy="36%" r="70%">
-      <stop offset="0%" stop-color="#fffdf7"/><stop offset="55%" stop-color="#efe7d6"/>
-      <stop offset="100%" stop-color="#cabfa8"/>
-    </radialGradient>
-    <radialGradient id="bassHead" cx="44%" cy="40%" r="75%">
-      <stop offset="0%" stop-color="#fbf6ec"/><stop offset="60%" stop-color="#e6dac6"/>
-      <stop offset="100%" stop-color="#c8b89c"/>
-    </radialGradient>
-    <linearGradient id="chrome" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#f4f7fa"/><stop offset="45%" stop-color="#aab2ba"/>
-      <stop offset="55%" stop-color="#cfd6dc"/><stop offset="100%" stop-color="#7e858d"/>
-    </linearGradient>
-    <linearGradient id="woodA" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#9a6238"/><stop offset="100%" stop-color="#5e3a20"/>
-    </linearGradient>
-    <linearGradient id="woodB" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#8a5631"/><stop offset="100%" stop-color="#50311b"/>
-    </linearGradient>
-    <linearGradient id="steel" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#dfe3e8"/><stop offset="100%" stop-color="#9aa1a8"/>
-    </linearGradient>
-    <linearGradient id="bassShell" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#6e4426"/><stop offset="100%" stop-color="#3f2616"/>
-    </linearGradient>
-    <radialGradient id="cymbal" cx="42%" cy="38%" r="75%">
-      <stop offset="0%" stop-color="#f7e6ad"/><stop offset="42%" stop-color="#dcb45f"/>
-      <stop offset="74%" stop-color="#b5862f"/><stop offset="100%" stop-color="#8a6320"/>
-    </radialGradient>
-    <radialGradient id="bell" cx="42%" cy="38%" r="70%">
-      <stop offset="0%" stop-color="#fdf0c4"/><stop offset="60%" stop-color="#d7ad57"/>
-      <stop offset="100%" stop-color="#a87c2c"/>
-    </radialGradient>
-  </defs>
+  ${hardware()}
+  ${D('crash', p => cymbal(p, 78, 18, -6))}
+  ${D('ride',  p => cymbal(p, 82, 19, 6))}
+  ${D('hat',   p => cymbal(p, 52, 12, 0))}
+  ${D('kick',  p => bass(p, 86))}
+  ${D('floor', p => drum(p, 58, 23, 96, 10))}
+  ${D('snare', p => drum(p, 52, 20, 52, 8))}
+  ${D('tom1',  p => drum(p, 46, 18, 66, 8))}
+  ${D('tom2',  p => drum(p, 50, 19, 68, 8))}
 
-  <!-- cymbals & stands (drawn behind the drums) -->
-  ${draw('crash', p => cymbal(p, 66, 15, 458, -6))}
-  ${draw('ride',  p => cymbal(p, 80, 19, 458,  5))}
-  ${draw('hat',   p => cymbal(p, 52, 13, 452,  0))}
-
-  <!-- drums -->
-  ${draw('kick',  p => bass(p, 108, 'bassShell'))}
-  ${draw('floor', p => drum(p, 66, 28, 104, 'woodB', '#5b3620'))}
-  ${draw('snare', p => drum(p, 60, 25, 60,  'steel', '#3a3f44'))}
-  ${draw('tom1',  p => drum(p, 50, 21, 64,  'woodA', '#5b3620'))}
-  ${draw('tom2',  p => drum(p, 55, 23, 66,  'woodA', '#5b3620'))}
-
-  <!-- drumsticks: tip at local (0,0), handle extends downward -->
-  <g class="stick" id="stickL"><circle cx="0" cy="0" r="6" fill="#e9d3a8"/><rect x="-4" y="0" width="8" height="120" rx="4" fill="url(#stickGrad)"/></g>
-  <g class="stick" id="stickR"><circle cx="0" cy="0" r="6" fill="#e9d3a8"/><rect x="-4" y="0" width="8" height="120" rx="4" fill="url(#stickGrad)"/></g>
-  <defs>
-    <linearGradient id="stickGrad" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#e9d3a8"/><stop offset="55%" stop-color="#b9905c"/><stop offset="100%" stop-color="#7c5a32"/>
-    </linearGradient>
-  </defs>
+  <g class="stick" id="stickL"><circle class="ln" cx="0" cy="0" r="5" fill="#d9c7a3"/><line class="ln" x1="0" y1="0" x2="0" y2="118"/></g>
+  <g class="stick" id="stickR"><circle class="ln" cx="0" cy="0" r="5" fill="#d9c7a3"/><line class="ln" x1="0" y1="0" x2="0" y2="118"/></g>
 </svg>`;
   }
 
@@ -161,17 +153,17 @@
     const stickR = svg.querySelector('#stickR');
     let useRight = true;
 
-    stickL.style.transform = 'translate(250px, 360px) rotate(-20deg)';
-    stickR.style.transform = 'translate(350px, 360px) rotate(20deg)';
+    stickL.style.transform = 'translate(250px, 360px) rotate(-22deg)';
+    stickR.style.transform = 'translate(352px, 360px) rotate(22deg)';
 
     function strike(id, el) {
       DrumAudio.play(id);
       el.classList.remove('hit'); void el.getBBox(); el.classList.add('hit');
-      const piece = PIECES[id];
+      const piece = P[id];
       const stick = useRight ? stickR : stickL;
-      const tilt = useRight ? 10 : -10;
+      const tilt = useRight ? 12 : -12;
       useRight = !useRight;
-      stick.style.transform = `translate(${piece.cx}px, ${piece.cy}px) rotate(${tilt}deg) scale(1,0.9)`;
+      stick.style.transform = `translate(${piece.cx}px, ${piece.cy}px) rotate(${tilt}deg) scale(1,0.88)`;
       setTimeout(() => {
         stick.style.transform = `translate(${piece.cx}px, ${piece.cy}px) rotate(${tilt}deg) scale(1,1)`;
       }, 90);
@@ -185,9 +177,8 @@
       });
     });
 
-    // global keyboard play
     const byKey = {};
-    Object.keys(PIECES).forEach(id => { byKey[PIECES[id].key] = id; });
+    Object.keys(P).forEach(id => { byKey[P[id].key] = id; });
     window.addEventListener('keydown', (ev) => {
       if (ev.repeat) return;
       const id = byKey[ev.key.toLowerCase()];
