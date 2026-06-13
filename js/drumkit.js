@@ -1,42 +1,58 @@
 /* =========================================================
-   drumkit.js — Builds the interactive playable drum kit.
-   Click, tap, or keyboard. Animated sticks fly to the
-   drum you hit. Renders into any element with [data-drumkit].
+   drumkit.js — Builds a realistic-looking, playable drum
+   kit. Click, tap, or keyboard. Animated sticks fly to the
+   drum you hit. Renders into any [data-drumkit] element.
    ========================================================= */
 
 (function () {
-  // pad definitions: positions are % within the kit-wrap box.
-  // key = keyboard key, color from rainbow palette.
+  // Realistic kit layout (player's view). Positions are % of
+  // the kit box; size is in px. "kind" picks the look.
   const PADS = [
-    { id: 'crash',  label: 'Crash', key: 'q', x: 6,  y: 2,  size: 90,  type: 'cymbal', color: '#ffd93d' },
-    { id: 'hat',    label: 'Hi-Hat',key: 'a', x: 2,  y: 36, size: 80,  type: 'cymbal', color: '#2ec4d6' },
-    { id: 'tom1',   label: 'Tom 1', key: 'w', x: 34, y: 8,  size: 80,  type: 'drum',   color: '#9b5de5' },
-    { id: 'tom2',   label: 'Tom 2', key: 'e', x: 56, y: 8,  size: 86,  type: 'drum',   color: '#4d8bff' },
-    { id: 'snare',  label: 'Snare', key: 's', x: 24, y: 50, size: 96,  type: 'drum',   color: '#ff914d' },
-    { id: 'floor',  label: 'Floor', key: 'd', x: 74, y: 46, size: 104, type: 'drum',   color: '#4dd599' },
-    { id: 'kick',   label: 'Kick',  key: ' ', x: 38, y: 66, size: 150, type: 'drum',   color: '#ff5757' },
+    { id: 'crash', label: 'Crash', key: 'q', x: 1,  y: 0,  size: 124, kind: 'cymbal', z: 2 },
+    { id: 'tom1',  label: 'Tom 1', key: 'w', x: 32, y: 7,  size: 96,  kind: 'tom',    z: 5, shell: '#7a4a2b' },
+    { id: 'tom2',  label: 'Tom 2', key: 'e', x: 54, y: 4,  size: 104, kind: 'tom',    z: 5, shell: '#7a4a2b' },
+    { id: 'hat',   label: 'Hi-Hat',key: 'a', x: 0,  y: 44, size: 100, kind: 'cymbal', z: 3 },
+    { id: 'snare', label: 'Snare', key: 's', x: 19, y: 52, size: 110, kind: 'snare',  z: 6, shell: '#c9ccd1' },
+    { id: 'floor', label: 'Floor', key: 'd', x: 72, y: 48, size: 124, kind: 'tom',    z: 4, shell: '#7a4a2b' },
+    { id: 'kick',  label: 'Kick',  key: ' ', x: 33, y: 56, size: 186, kind: 'kick',   z: 1, shell: '#5b3620' },
   ];
   const KEY_LABEL = { ' ': 'space' };
 
   function build(host) {
     const wrap = document.createElement('div');
     wrap.className = 'kit-wrap';
-    // give the box a height proportional to width via padding trick
-    wrap.style.aspectRatio = '1 / 0.95';
+    wrap.style.aspectRatio = '1 / 0.92';
     host.appendChild(wrap);
 
     const byKey = {};
 
     PADS.forEach(p => {
       const btn = document.createElement('button');
-      btn.className = 'pad ' + p.type;
+      btn.className = 'pad kind-' + p.kind;
       btn.style.left = p.x + '%';
       btn.style.top = p.y + '%';
       btn.style.width = p.size + 'px';
-      btn.style.height = (p.type === 'cymbal' ? p.size * 0.5 : p.size) + 'px';
-      btn.style.background = `radial-gradient(circle at 50% 35%, ${lighten(p.color)}, ${p.color})`;
+      btn.style.height = (p.kind === 'cymbal' ? Math.round(p.size * 0.94) : p.size) + 'px';
+      btn.style.zIndex = p.z;
+      if (p.shell) btn.style.setProperty('--shell', p.shell);
       btn.setAttribute('aria-label', p.label);
       btn.dataset.id = p.id;
+
+      if (p.kind === 'cymbal') {
+        btn.innerHTML = `
+          <span class="stand" aria-hidden="true"></span>
+          <span class="cymbal-disc"><span class="bell"></span></span>`;
+      } else {
+        // build a drum: rim ring + lugs + head
+        const lugCount = p.kind === 'kick' ? 10 : 8;
+        let lugs = '';
+        for (let i = 0; i < lugCount; i++) {
+          lugs += `<span class="lug" style="transform:rotate(${(360 / lugCount) * i}deg) translateY(-${p.size / 2 - 7}px)"></span>`;
+        }
+        btn.innerHTML = `
+          <span class="rim" aria-hidden="true">${lugs}</span>
+          <span class="head"></span>`;
+      }
 
       const hint = document.createElement('span');
       hint.className = 'key-hint';
@@ -44,25 +60,23 @@
       btn.appendChild(hint);
 
       const lbl = document.createElement('span');
+      lbl.className = 'pad-label';
       lbl.textContent = p.label;
       btn.appendChild(lbl);
 
       const ring = document.createElement('span');
       ring.className = 'pad-ring';
-      ring.style.inset = '0';
       btn.appendChild(ring);
 
       wrap.appendChild(btn);
       byKey[p.key] = { el: btn, pad: p, ring };
 
-      // pointer (covers mouse + touch)
       btn.addEventListener('pointerdown', (ev) => {
         ev.preventDefault();
         strike(p, btn, ring);
       });
     });
 
-    // two sticks
     const stickL = mkStick(); const stickR = mkStick();
     wrap.appendChild(stickL); wrap.appendChild(stickR);
     let useRight = true;
@@ -71,13 +85,11 @@
       DrumAudio.play(pad.id);
       el.classList.remove('hit'); void el.offsetWidth; el.classList.add('hit');
       ring.classList.remove('go'); void ring.offsetWidth; ring.classList.add('go');
-      // animate a stick toward this pad
       const stick = useRight ? stickR : stickL;
       useRight = !useRight;
       moveStick(stick, el, wrap);
     }
 
-    // keyboard
     window.addEventListener('keydown', (ev) => {
       if (ev.repeat) return;
       const k = ev.key.toLowerCase();
@@ -95,8 +107,8 @@
     const s = document.createElement('div');
     s.className = 'stick';
     s.style.left = '46%';
-    s.style.top = '78%';
-    s.style.transform = 'rotate(20deg)';
+    s.style.top = '74%';
+    s.style.transform = 'rotate(18deg)';
     return s;
   }
 
@@ -106,21 +118,12 @@
     const cx = pr.left - wr.left + pr.width / 2;
     const cy = pr.top - wr.top + pr.height / 2;
     stick.style.left = (cx - 4) + 'px';
-    stick.style.top = (cy) + 'px';
+    stick.style.top = cy + 'px';
     stick.style.height = Math.max(70, wr.height - cy) + 'px';
-    // quick down-up tap motion
     stick.style.transform = 'rotate(6deg) scaleY(0.92)';
     setTimeout(() => { stick.style.transform = 'rotate(14deg) scaleY(1)'; }, 90);
   }
 
-  function lighten(hex) {
-    const n = parseInt(hex.slice(1), 16);
-    let r = (n >> 16) + 60, g = ((n >> 8) & 255) + 60, b = (n & 255) + 60;
-    r = Math.min(255, r); g = Math.min(255, g); b = Math.min(255, b);
-    return `rgb(${r},${g},${b})`;
-  }
-
-  // init all kits on the page
   document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('[data-drumkit]').forEach(build);
   });
