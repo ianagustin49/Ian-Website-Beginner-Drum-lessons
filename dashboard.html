@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Progress | Ian's Beginner Drum Lessons</title>
+  <meta name="description" content="Track your drumming progress: lessons completed, your current level, practice streak, and badges you've unlocked." />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="rainbow-strip"></div>
+  <div class="scroll-track" aria-hidden="true">
+    <div class="scroll-stick"><span class="shaft"></span><span class="tip"></span></div>
+  </div>
+
+  <!-- ambient glass glows -->
+  <div class="dash-glows" aria-hidden="true"><span class="g1"></span><span class="g2"></span></div>
+
+  <header class="site-header">
+    <nav class="nav">
+      <a href="index.html" class="logo"><span class="logo-emoji">🥁</span> Ian's Drum Lessons</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="lessons.html">Lessons</a></li>
+        <li><a href="play.html" class="play-link">▶ Play Drums</a></li>
+        <li><a href="dashboard.html" class="active">My Progress</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+      <button class="hamburger" aria-label="Toggle menu" onclick="toggleMenu()">&#9776;</button>
+    </nav>
+  </header>
+
+  <main class="dash">
+    <div class="container">
+
+      <!-- Heading -->
+      <div class="dash-head">
+        <h1>Your Progress</h1>
+        <p id="dash-date">Welcome back!</p>
+      </div>
+
+      <!-- KPI cards -->
+      <div class="kpi-grid">
+        <div class="glass-card kpi">
+          <div class="kpi-row">
+            <div class="kpi-icon c1">✅</div>
+          </div>
+          <div><div class="kpi-value" id="kpi-done">0/8</div><div class="kpi-label">Lessons Completed</div></div>
+        </div>
+        <div class="glass-card kpi">
+          <div class="kpi-row">
+            <div class="kpi-icon c2">📈</div>
+          </div>
+          <div><div class="kpi-value" id="kpi-pct">0%</div><div class="kpi-label">Course Progress</div></div>
+        </div>
+        <div class="glass-card kpi">
+          <div class="kpi-row">
+            <div class="kpi-icon c3">🎯</div>
+          </div>
+          <div><div class="kpi-value" id="kpi-level">Level 1</div><div class="kpi-label">Current Level</div></div>
+        </div>
+        <div class="glass-card kpi">
+          <div class="kpi-row">
+            <div class="kpi-icon c4">🔥</div>
+          </div>
+          <div><div class="kpi-value" id="kpi-streak">1 day</div><div class="kpi-label">Practice Streak</div></div>
+        </div>
+      </div>
+
+      <!-- main grid: level progress + overall ring -->
+      <div class="dash-grid">
+        <section class="glass-card panel" aria-label="Progress by level">
+          <div class="panel-head">
+            <h2>Progress by Level</h2>
+            <span class="panel-sub">Your journey across the course</span>
+          </div>
+          <div class="level-prog" id="level-prog"></div>
+        </section>
+
+        <section class="glass-card panel" aria-label="Overall completion">
+          <div class="panel-head"><h2>Overall</h2></div>
+          <div class="ring-wrap">
+            <div class="ring" role="img" aria-label="Overall course completion">
+              <div class="ring-center">
+                <span class="ring-pct" id="ring-pct">0%</span>
+                <span class="ring-lbl">complete</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- continue learning -->
+      <div class="glass-card next-card" style="margin-bottom:1.4rem;">
+        <div class="next-icon">▶</div>
+        <div class="next-text">
+          <div class="next-eyebrow" id="next-eyebrow">Pick up where you left off</div>
+          <div class="next-title" id="next-title">Lesson 1: Meet the Drum Kit</div>
+        </div>
+        <a class="btn btn-primary" id="next-link" href="lessons.html">Continue →</a>
+      </div>
+
+      <!-- badges -->
+      <section class="glass-card panel" style="margin-bottom:1.4rem;" aria-label="Achievements">
+        <div class="panel-head">
+          <h2>Badges</h2>
+          <span class="panel-sub">Unlock these as you learn</span>
+        </div>
+        <div class="badge-grid" id="badge-grid"></div>
+      </section>
+
+      <!-- lessons table -->
+      <section class="glass-card panel" aria-label="All lessons">
+        <div class="panel-head">
+          <h2>Your Lessons</h2>
+          <a class="panel-sub" href="lessons.html" style="color:var(--khaki);">Go to lessons →</a>
+        </div>
+        <div class="dash-table-wrap">
+          <table class="dash-table">
+            <thead>
+              <tr><th>#</th><th>Lesson</th><th>Status</th></tr>
+            </thead>
+            <tbody id="lessons-tbody"></tbody>
+          </table>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p><span class="foot-emoji">🥁</span> Made with care by Ian &nbsp;·&nbsp; Free Beginner Drum Lessons for Everyone &nbsp;·&nbsp; <a href="about.html">About Me</a></p>
+  </footer>
+
+  <script src="js/dashboard.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
