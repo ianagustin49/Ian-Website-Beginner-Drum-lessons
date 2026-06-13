@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lessons | Ian's Beginner Drum Lessons</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="nav container">
+      <a href="index.html" class="logo">🥁 Ian's Drum Lessons</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="lessons.html" class="active">Lessons</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+      <button class="hamburger" aria-label="Toggle menu" onclick="toggleMenu()">&#9776;</button>
+    </nav>
+  </header>
+
+  <section class="page-hero">
+    <div class="container">
+      <h1>Beginner Drum Lessons</h1>
+      <p>Work through each lesson in order. Take your time — consistency beats speed every time.</p>
+    </div>
+  </section>
+
+  <main class="lessons-page section container">
+
+    <!-- LESSON 1 -->
+    <article class="lesson-article" id="lesson-1">
+      <div class="lesson-header">
+        <span class="lesson-badge">Lesson 01</span>
+        <h2>Parts of the Drum Kit</h2>
+      </div>
+      <div class="lesson-body">
+        <p>Before you play a single note, you need to know what you're sitting behind. A standard drum kit has these main parts:</p>
+        <ul>
+          <li><strong>Bass Drum</strong> — the big drum on the floor, played with your right foot on a kick pedal.</li>
+          <li><strong>Snare Drum</strong> — the sharp, crisp drum between your knees. The backbone of most beats.</li>
+          <li><strong>Hi-Hat</strong> — two cymbals on a stand to your left, played with both a stick and a foot pedal.</li>
+          <li><strong>Rack Toms (Tom 1 & 2)</strong> — the smaller drums mounted above the bass drum.</li>
+          <li><strong>Floor Tom</strong> — a larger tom sitting on legs to your right.</li>
+          <li><strong>Ride Cymbal</strong> — the large cymbal to the right, used for steady rhythmic patterns.</li>
+          <li><strong>Crash Cymbal</strong> — used for accents and endings.</li>
+        </ul>
+        <div class="tip-box">
+          <strong>Beginner Tip:</strong> You don't need a full kit to start! A practice pad and a pair of sticks are enough to learn the fundamentals.
+        </div>
+      </div>
+    </article>
+
+    <!-- LESSON 2 -->
+    <article class="lesson-article" id="lesson-2">
+      <div class="lesson-header">
+        <span class="lesson-badge">Lesson 02</span>
+        <h2>How to Hold Drumsticks</h2>
+      </div>
+      <div class="lesson-body">
+        <p>Proper grip prevents injury and gives you control. There are two main grips:</p>
+        <h3>Matched Grip (Recommended for Beginners)</h3>
+        <p>Both hands hold the stick the same way. Hold the stick between your thumb and the first joint of your index finger, about one-third of the way from the butt end. Let the other fingers wrap loosely around the stick.</p>
+        <h3>Traditional Grip</h3>
+        <p>The left hand holds the stick differently — resting in the webbing between thumb and index finger, rotating like turning a key. This grip comes from marching band drumming.</p>
+        <div class="tip-box">
+          <strong>Beginner Tip:</strong> Start with matched grip. It's symmetrical, intuitive, and used by most modern drummers.
+        </div>
+        <h3>The Rebound</h3>
+        <p>After you strike the drum, let the stick bounce back naturally. Don't squeeze or muscle the stick down. Most of your power comes from the rebound, not from pressing harder.</p>
+      </div>
+    </article>
+
+    <!-- LESSON 3 -->
+    <article class="lesson-article" id="lesson-3">
+      <div class="lesson-header">
+        <span class="lesson-badge">Lesson 03</span>
+        <h2>Reading Basic Drum Notation</h2>
+      </div>
+      <div class="lesson-body">
+        <p>Drum notation is read left to right on a staff. Each line or space represents a different drum or cymbal:</p>
+        <div class="notation-guide">
+          <div class="notation-row"><span class="note-symbol">×</span><span>Hi-Hat (top space)</span></div>
+          <div class="notation-row"><span class="note-symbol">×</span><span>Ride Cymbal (top space, sometimes marked "R")</span></div>
+          <div class="notation-row"><span class="note-symbol">●</span><span>Snare (middle line)</span></div>
+          <div class="notation-row"><span class="note-symbol">●</span><span>Bass Drum (bottom space, below the staff)</span></div>
+        </div>
+        <h3>Note Values</h3>
+        <ul>
+          <li><strong>Whole note</strong> — 4 beats</li>
+          <li><strong>Half note</strong> — 2 beats</li>
+          <li><strong>Quarter note</strong> — 1 beat (most common in basic grooves)</li>
+          <li><strong>Eighth note</strong> — half a beat (counted as "1 and 2 and 3 and 4 and")</li>
+        </ul>
+        <div class="tip-box">
+          <strong>Beginner Tip:</strong> When counting, say "1-and-2-and-3-and-4-and" out loud. Each number is a beat; each "and" is the halfway point between beats.
+        </div>
+      </div>
+    </article>
+
+    <!-- LESSON 4 -->
+    <article class="lesson-article" id="lesson-4">
+      <div class="lesson-header">
+        <span class="lesson-badge">Lesson 04</span>
+        <h2>Your First Beat — The Rock Groove</h2>
+      </div>
+      <div class="lesson-body">
+        <p>This is the most important beat in rock music. Once you get this, you can play along with hundreds of songs.</p>
+        <h3>The Pattern (4/4 time)</h3>
+        <div class="beat-grid">
+          <div class="beat-row">
+            <span class="part-label">Hi-Hat</span>
+            <div class="beat-cells">
+              <div class="beat-cell filled" title="Beat 1">1</div>
+              <div class="beat-cell filled" title="and">&</div>
+              <div class="beat-cell filled" title="Beat 2">2</div>
+              <div class="beat-cell filled" title="and">&</div>
+              <div class="beat-cell filled" title="Beat 3">3</div>
+              <div class="beat-cell filled" title="and">&</div>
+              <div class="beat-cell filled" title="Beat 4">4</div>
+              <div class="beat-cell filled" title="and">&</div>
+            </div>
+          </div>
+          <div class="beat-row">
+            <span class="part-label">Snare</span>
+            <div class="beat-cells">
+              <div class="beat-cell" title="Beat 1">1</div>
+              <div class="beat-cell" title="and">&</div>
+              <div class="beat-cell snare-hit" title="Beat 2">2</div>
+              <div class="beat-cell" title="and">&</div>
+              <div class="beat-cell" title="Beat 3">3</div>
+              <div class="beat-cell" title="and">&</div>
+              <div class="beat-cell snare-hit" title="Beat 4">4</div>
+              <div class="beat-cell" title="and">&</div>
+            </div>
+          </div>
+          <div class="beat-row">
+            <span class="part-label">Bass</span>
+            <div class="beat-cells">
+              <div class="beat-cell bass-hit" title="Beat 1">1</div>
+              <div class="beat-cell" title="and">&</div>
+              <div class="beat-cell" title="Beat 2">2</div>
+              <div class="beat-cell" title="and">&</div>
+              <div class="beat-cell bass-hit" title="Beat 3">3</div>
+              <div class="beat-cell" title="and">&</div>
+              <div class="beat-cell" title="Beat 4">4</div>
+              <div class="beat-cell" title="and">&</div>
+            </div>
+          </div>
+        </div>
+        <h3>How to Learn It Step by Step</h3>
+        <ol>
+          <li>Start with just the hi-hat — eighth notes, both hands alternating. R L R L R L R L.</li>
+          <li>Add the snare on beats 2 and 4 with your right hand (or left if left-handed).</li>
+          <li>Add the bass drum on beats 1 and 3 with your foot.</li>
+          <li>Put it all together — slowly! Start at 50–60 BPM.</li>
+        </ol>
+        <div class="tip-box">
+          <strong>Beginner Tip:</strong> Practice each limb separately before combining. Your brain needs time to build independent muscle memory for each hand and foot.
+        </div>
+      </div>
+    </article>
+
+    <!-- LESSON 5 -->
+    <article class="lesson-article" id="lesson-5">
+      <div class="lesson-header">
+        <span class="lesson-badge">Lesson 05</span>
+        <h2>Basic Rudiments</h2>
+      </div>
+      <div class="lesson-body">
+        <p>Rudiments are the building blocks of drumming — like scales for a pianist. Start with these three:</p>
+        <h3>1. Single Stroke Roll</h3>
+        <p>Alternate strokes: <code>R L R L R L R L</code></p>
+        <p>This is the most fundamental motion in drumming. Practice it slowly with a metronome and gradually speed up over days and weeks.</p>
+        <h3>2. Double Stroke Roll</h3>
+        <p>Two strokes per hand: <code>R R L L R R L L</code></p>
+        <p>Each hand plays two notes in a row. The key is using the rebound for the second stroke — don't muscle it.</p>
+        <h3>3. Paradiddle</h3>
+        <p>Pattern: <code>R L R R &nbsp; L R L L</code></p>
+        <p>The paradiddle is everywhere in real drumming. It lets you start fills on either hand, making your playing more fluid and musical.</p>
+        <div class="tip-box">
+          <strong>Practice Plan:</strong> Spend 5 minutes on each rudiment every day. Use a practice pad. You'll see results within 2 weeks.
+        </div>
+      </div>
+    </article>
+
+    <!-- LESSON 6 -->
+    <article class="lesson-article" id="lesson-6">
+      <div class="lesson-header">
+        <span class="lesson-badge">Lesson 06</span>
+        <h2>Playing With a Metronome</h2>
+      </div>
+      <div class="lesson-body">
+        <p>The metronome is the single most important practice tool for a drummer. Here's how to use it effectively:</p>
+        <h3>Starting Slow Is Not Cheating</h3>
+        <p>Set the metronome to a tempo where you can play the pattern <em>perfectly</em>. If you make mistakes, it's too fast. For beginners, 50–70 BPM is a great starting range for basic grooves.</p>
+        <h3>How to Speed Up</h3>
+        <p>Once you can play a pattern cleanly 10 times in a row without a mistake, increase the tempo by 5 BPM. Repeat. This method builds real speed that sticks.</p>
+        <h3>Practice With Music</h3>
+        <p>After you're comfortable with a metronome, play along with real songs. Choose songs with simple, steady beats at first. This makes practice fun and trains you to listen while playing.</p>
+        <h3>Suggested BPM Goals for Beginners</h3>
+        <ul>
+          <li>Week 1–2: Basic rock groove at 60–70 BPM</li>
+          <li>Week 3–4: Basic rock groove at 80–90 BPM</li>
+          <li>Month 2: Play along with a slow-to-medium song</li>
+        </ul>
+        <div class="tip-box">
+          <strong>Free Metronome Apps:</strong> Soundbrenner, Pro Metronome, or just search "online metronome" in your browser to get started for free.
+        </div>
+      </div>
+    </article>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Made with ❤️ by Ian &nbsp;|&nbsp; Beginner Drum Lessons &nbsp;|&nbsp; <a href="about.html">About Me</a></p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
